@@ -1,1 +1,0 @@
-C:\Users\jonat\Documents\Development\Programming\Rust\number-guessing-game\target\debug\number-guessing-game.exe: C:\Users\jonat\Documents\Development\Programming\Rust\number-guessing-game\src\main.rs
