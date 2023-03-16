@@ -37,6 +37,11 @@ fn main() {
                 break;
             }
         }
+        
+
     }
 }
 
+fn func(i32: num){
+    num;
+}
