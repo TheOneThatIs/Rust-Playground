@@ -91,8 +91,6 @@ fn draw_board() {
     change_background(Color::Black); print!("♝ ");
     change_background(Color::White); print!("♞ ");
     change_background(Color::Black); print!("♜ \n");
-
-    
 }
 
 fn clear_screen() {

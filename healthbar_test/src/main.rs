@@ -24,17 +24,20 @@ fn main() {
     clear_screen();
 }
 
+
 fn drawHealth(hp: &i32, maxHP: &i32){
     println!("{}", console::style("Goblin").cyan().italic());
 
     print!("{}", console::style("HP: ").green());
     
-    for num in 0..*hp { // change it to get range
+    for num in 0..*hp {
         print!("▓");
     }
-    for num in 0..*maxHP-*hp { // change it to get range
+
+    for num in 0..*maxHP-*hp {
         print!("░");
     }
+
     println!(" {hp}/{maxHP}\n\n");
 }
 
