@@ -31,11 +31,17 @@ fn drawHealth(hp: &i32, maxHP: &i32){
     print!("{}", console::style("HP: ").green());
     
     for num in 0..*hp {
-        print!("▓");
+        if *hp > 5 {
+            print!("{}", console::style("▓").green());
+        } else if *hp <= 5 && *hp > 2 {
+            print!("{}", console::style("▓").fg(console::Color::Yellow).bg(console::Color::Yellow));
+        } else if *hp <= 2 {
+            print!("{}", console::style("▓").red());
+        }
     }
 
     for num in 0..*maxHP-*hp {
-        print!("░");
+        print!("{}", console::style("░").white());
     }
 
     println!(" {hp}/{maxHP}\n\n");
