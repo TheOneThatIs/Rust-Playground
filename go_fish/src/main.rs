@@ -274,18 +274,27 @@ fn render() {
     println!("│✾ ₪│✾ ₪│✾ ₪₪₪₪₪ ✾│");
     println!("╰───╰───╰─────────╯");
 	
-	move_cursor(3, Direction::Down);
-	move_cursor((terminal_size.1 as i32/2)-13, Direction::Right);
-    
+
+    move_cursor(3, Direction::Down);
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("╭──────────╮");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│✾╭────────┴╮");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│ │✾ ₪₪₪₪₪ ✾│");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│ │  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│ │  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│ │  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│ │  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("│✾│  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("╰─│✾ ₪₪₪₪₪ ✾│");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("  ╰─────────╯");
 }
 
