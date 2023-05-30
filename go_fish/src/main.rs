@@ -26,18 +26,6 @@ fn main() {
     //println!("│       3 │");
     //println!("╰─────────╯");
     //
-    
-    //// HAND
-    //println!(" 1:  2:  3:");
-    //println!("╭───╭───╭─────────╮");
-    //println!("│ A │ 10│ 3       │");
-    //println!("│ ♡ │ ♠ │         │");
-    //println!("│   │   │      ♠  │");
-    //println!("│   │   │    ♠    │");
-    //println!("│   │   │  ♠      │");
-    //println!("│   │   │         │");
-    //println!("│   │   │       3 │");
-    //println!("╰───╰───╰─────────╯");
 
     //println!("╭─────────╮");//⌢⌄ 
     //println!("│ A♧      │");
@@ -186,8 +174,6 @@ fn main() {
     //println!("│ K♧      │");
     //println!("╰─────────╯");
 
-	print!("{esc}c", esc = 27 as char); // Clear screen
-
 	let mut hand: Vec<i32>;
 	let mut opponents_hand: Vec<i32>;
 	let mut deck: Vec<Card> = Vec::with_capacity(53);
@@ -252,9 +238,11 @@ fn play_turn(deck: &Vec<Card>) {
 }
 
 fn render() {
+	println!("\e[8;25;80t");
+	print!("{esc}c", esc = 27 as char); // Clear screen
 	let terminal_size = console::Term::size(&console::Term::stdout());
 	
-    // move_cursor_absolute(0, 0);
+    move_cursor_absolute(0, 0);
 	println!(" ______     ______        ______   __     ______     __  __");
 	println!(r"╱╲  ___╲   ╱╲  __ ╲      ╱╲  ___╲ ╱╲ ╲   ╱\  ___╲   ╱╲ ╲_╲ ╲");
 	println!(r"╲ ╲ ╲__ ╲  ╲ ╲ \╱\ ╲     ╲ ╲  __╲ ╲ ╲ ╲  ╲ \___  ╲  ╲ ╲  __ ╲");
@@ -296,6 +284,18 @@ fn render() {
     println!("╰─│✾ ₪₪₪₪₪ ✾│");
 	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("  ╰─────────╯");
+
+	move_cursor(3, Direction::Down);
+	println!("{char: >width$}", char = " 1:  2:  3:        ", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "╭───╭───╭─────────╮", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│ A │ 10│ 3       │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│ ♡ │ ♠ │         │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│   │   │      ♠  │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│   │   │    ♠    │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│   │   │  ♠      │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│   │   │         │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "│   │   │       3 │", width=terminal_size.1 as usize);
+	println!("{char: >width$}", char = "╰───╰───╰─────────╯", width=terminal_size.1 as usize);
 }
 
 
@@ -342,5 +342,4 @@ enum Color {
     BrightMagenta,
     BrightCyan,
     BrightWhite
-
 }
