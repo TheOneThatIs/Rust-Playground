@@ -41,7 +41,3 @@ fn main() {
 
     }
 }
-
-fn func(i32: num){
-    num;
-}

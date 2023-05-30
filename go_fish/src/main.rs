@@ -1,10 +1,20 @@
 
 enum Rank {
-	Ace, One, Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King
+	Ace=1, Two=2, Three=3, Four=4, Five=5, Six=6, Seven=7, Eight=8, Nine=9, Ten=10, Jack=11, Queen=12, King=13
 }
 
 enum Suit {
-	Club, Diamond, Heart, Spade, 
+	Club=0, Diamond=1, Heart=2, Spade=3, 
+}
+
+enum Location {
+	PlayerHand=0, OpponentHand=1, Deck=2, PairPile=3
+}
+
+struct Card {
+	rank: u8,
+	suit: u8,
+	location: Location
 }
 
 fn main() {
@@ -194,8 +204,18 @@ fn main() {
     //println!("│ ██   ██ │");
     //println!("│ K♧      │");
     //println!("╰─────────╯");
+	let mut hand: Vec<i32>;
+	let mut deck = Vec::with_capacity(53);
 
-	println!("{}", create_card(Rank::Jack, Suit::Diamond));
+	for i in 0..4 {
+		for j in 1..14 {
+			deck.push(Card {rank: j as u8, suit: i as u8, location: Location::Deck});
+		}
+	}
+
+	for i in 0..52 {
+		println!("Rank: {}, Suit:{}", deck[i].rank, deck[i].suit);
+	}
 
     //println!("╭─────────╮");
     //println!("│      J♧ │");
@@ -207,33 +227,35 @@ fn main() {
     //println!("│ J♧      │");
     //println!("╰─────────╯");
 	//
-	//println!("╭─────────╮");
-    //println!("│      K♧ │");
-    //println!("│         │");
-    //println!("│    🕆    │");
-    //println!("│ │╲╱ ╲╱│ │");
-    //println!("│ │⁕ ※ ⁕│ │");
-    //println!("│ ╰─────╯ │");
-    //println!("│ K♧      │");
-    //println!("╰─────────╯");
+	println!("╭─────────╮");
+    println!("│      Q♧ │");
+    println!("│    🕆    │");
+    println!("│ │╲╱ ╲╱│ │");
+    println!("│ │⁕ ※ ⁕│ │");
+    println!("│ ╰⏔⏔⏔⏔⏔╯ │");
+    println!("│         │");
+    println!("│ Q♧      │");
+    println!("╰─────────╯");
     //
-    //println!("╭─────────╮");
-    //println!("│      Q♧ │");
-    //println!("│  _.🕆._  │");
-    //println!("│(^╲╱^╲╱^)│");
-    //println!("│ ╲⁕*⁛*⁕╱ │");
-    //println!("│ ╰⏔⏔°⏔⏔╯ │");
-    //println!("│         │");
-    //println!("│ Q♧      │");
-    //println!("╰─────────╯");
+    println!("╭─────────╮");
+    println!("│      K♧ │");
+    println!("│  _.🕆._  │");
+    println!("│(^╲╱^╲╱^)│");
+    println!("│ ╲⁕*⁛*⁕╱ │");
+    println!("│ ╰⏔⏔°⏔⏔╯ │");
+    println!("│         │");
+    println!("│ K♧      │");
+    println!("╰─────────╯");
 
 	dont_close_program_until_input();
 }
 
-fn create_card(rank: Rank, suit: Suit) -> String {
-	let base_card = String::from("╭─────────╮\n│         │\n│         │\n│         │\n│         │\n│         │\n│         │\n│         │\n╰─────────╯");
+fn create_card(rank: i32, suit: i32) -> String {
+	let base_card = String::from("╭─────────╮\n│      RS │\n│         │\n│         │\n│         │\n│         │\n│         │\n│ RS      │\n╰─────────╯");
 	let edge_card = String::from("╭───\n│   \n│   \n│   \n│   \n│   \n│   \n│   \n╰───");
 	let suit_pattern_2 = String::from(" n       \n         \n      s  \n         \n  s      \n         \n       n ");
+
+	println!("{}", base_card);
 
 	String::new()
 }
