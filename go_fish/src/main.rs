@@ -1,4 +1,3 @@
-
 enum Rank {
 	Ace=1, Two=2, Three=3, Four=4, Five=5, Six=6, Seven=7, Eight=8, Nine=9, Ten=10, Jack=11, Queen=12, King=13
 }
@@ -13,17 +12,10 @@ enum Location {
 
 struct Card {
 	rank: u8,
-	suit: u8,
-	location: Location
+	suit: u8
 }
 
 fn main() {
-    //println!(" ______     ______        ______   __     ______     __  __");
-    //println!(r"/\  ___\   /\  __ \      /\  ___\ /\ \   /\  ___\   /\ \_\ \");
-    //println!(r"\ \ \__ \  \ \ \/\ \     \ \  __\ \ \ \  \ \___  \  \ \  __ \");
-    //println!(r" \ \_____\  \ \_____\     \ \_\    \ \_\  \/\_____\  \ \_\ \_\");
-    //println!(r"  \/_____/   \/_____/      \/_/     \/_/   \/_____/   \/_/\/_");
-    //
     //println!("╭─────────╮");
     //println!("│ 3       │");
     //println!("│         │");
@@ -34,18 +26,7 @@ fn main() {
     //println!("│       3 │");
     //println!("╰─────────╯");
     //
-    //// DECK
-    //println!("╭──────────╮");
-    //println!("│ ╭────────┴╮");
-    //println!("│ │✾ ₪₪₪₪₪ ✾│");
-    //println!("│ │  ▚▚▚▚▚  │");
-    //println!("│ │  ▚▚▚▚▚  │");
-    //println!("│ │  ▚▚▚▚▚  │");
-    //println!("│ │  ▚▚▚▚▚  │");
-    //println!("│ │  ▚▚▚▚▚  │");
-    //println!("╰─│✾ ₪₪₪₪₪ ✾│");
-    //println!("  ╰─────────╯");
-    //
+    
     //// HAND
     //println!(" 1:  2:  3:");
     //println!("╭───╭───╭─────────╮");
@@ -204,18 +185,23 @@ fn main() {
     //println!("│ ██   ██ │");
     //println!("│ K♧      │");
     //println!("╰─────────╯");
+
+	print!("{esc}c", esc = 27 as char); // Clear screen
+
 	let mut hand: Vec<i32>;
-	let mut deck = Vec::with_capacity(53);
+	let mut opponents_hand: Vec<i32>;
+	let mut deck: Vec<Card> = Vec::with_capacity(53);
 
 	for i in 0..4 {
 		for j in 1..14 {
-			deck.push(Card {rank: j as u8, suit: i as u8, location: Location::Deck});
+			deck.push(Card {rank: j as u8, suit: i as u8});
 		}
 	}
-
-	for i in 0..52 {
-		println!("Rank: {}, Suit:{}", deck[i].rank, deck[i].suit);
-	}
+    
+    loop {
+        render();
+        play_turn(&deck);
+    }
 
     //println!("╭─────────╮");
     //println!("│      J♧ │");
@@ -227,27 +213,25 @@ fn main() {
     //println!("│ J♧      │");
     //println!("╰─────────╯");
 	//
-	println!("╭─────────╮");
-    println!("│      Q♧ │");
-    println!("│    🕆    │");
-    println!("│ │╲╱ ╲╱│ │");
-    println!("│ │⁕ ※ ⁕│ │");
-    println!("│ ╰⏔⏔⏔⏔⏔╯ │");
-    println!("│         │");
-    println!("│ Q♧      │");
-    println!("╰─────────╯");
+	//println!("╭─────────╮");
+    //println!("│      Q♧ │");
+    //println!("│    🕆    │");
+    //println!("│ │╲╱ ╲╱│ │");
+    //println!("│ │⁕ ※ ⁕│ │");
+    //println!("│ ╰⏔⏔⏔⏔⏔╯ │");
+    //println!("│         │");
+    //println!("│ Q♧      │");
+    //println!("╰─────────╯");
     //
-    println!("╭─────────╮");
-    println!("│      K♧ │");
-    println!("│  _.🕆._  │");
-    println!("│(^╲╱^╲╱^)│");
-    println!("│ ╲⁕*⁛*⁕╱ │");
-    println!("│ ╰⏔⏔°⏔⏔╯ │");
-    println!("│         │");
-    println!("│ K♧      │");
-    println!("╰─────────╯");
-
-	dont_close_program_until_input();
+    //println!("╭─────────╮");
+    //println!("│      K♧ │");
+    //println!("│  _.🕆._  │");
+    //println!("│(^╲╱^╲╱^)│");
+    //println!("│ ╲⁕*⁛*⁕╱ │");
+    //println!("│ ╰⏔⏔°⏔⏔╯ │");
+    //println!("│         │");
+    //println!("│ K♧      │");
+    //println!("╰─────────╯");
 }
 
 fn create_card(rank: i32, suit: i32) -> String {
@@ -260,9 +244,94 @@ fn create_card(rank: i32, suit: i32) -> String {
 	String::new()
 }
 
-fn dont_close_program_until_input(){
-	let mut input = String::new();
+fn play_turn(deck: &Vec<Card>) {
+	let mut guess = String::new();
 	 std::io::stdin()
-            .read_line(&mut input)
+            .read_line(&mut guess)
             .expect("Failed to read the line!");
+}
+
+fn render() {
+	let terminal_size = console::Term::size(&console::Term::stdout());
+	
+    // move_cursor_absolute(0, 0);
+	println!(" ______     ______        ______   __     ______     __  __");
+	println!(r"╱╲  ___╲   ╱╲  __ ╲      ╱╲  ___╲ ╱╲ ╲   ╱\  ___╲   ╱╲ ╲_╲ ╲");
+	println!(r"╲ ╲ ╲__ ╲  ╲ ╲ \╱\ ╲     ╲ ╲  __╲ ╲ ╲ ╲  ╲ \___  ╲  ╲ ╲  __ ╲");
+	println!(r" ╲ ╲_____╲  ╲ ╲_____╲     ╲ ╲_\_╱  ╲ ╲_╲  ╲╱\_____╲  ╲ ╲_╲╱╲_╲");
+	println!(r"  ╲╱_____╱   ╲╱_____╱      ╲╱_╱     ╲╱_╱   ╲╱_____╱   ╲╱_╱╲╱_╱");
+	println!("{char:*>width$}", char = "*", width=terminal_size.1 as usize);
+
+	move_cursor(1, Direction::Down);
+
+	println!("╭───╭───╭─────────╮");
+    println!("│✾ ₪│✾ ₪│✾ ₪₪₪₪₪ ✾│");
+    println!("│  ▚│  ▚│  ▚▚▚▚▚  │");
+    println!("│  ▚│  ▚│  ▚▚▚▚▚  │");
+    println!("│  ▚│  ▚│  ▚▚▚▚▚  │");
+    println!("│  ▚│  ▚│  ▚▚▚▚▚  │");
+    println!("│  ▚│  ▚│  ▚▚▚▚▚  │");
+    println!("│✾ ₪│✾ ₪│✾ ₪₪₪₪₪ ✾│");
+    println!("╰───╰───╰─────────╯");
+	
+	move_cursor(3, Direction::Down);
+	move_cursor((terminal_size.1 as i32/2)-13, Direction::Right);
+    
+	println!("╭──────────╮");
+    println!("│✾╭────────┴╮");
+    println!("│ │✾ ₪₪₪₪₪ ✾│");
+    println!("│ │  ▚▚▚▚▚  │");
+    println!("│ │  ▚▚▚▚▚  │");
+    println!("│ │  ▚▚▚▚▚  │");
+    println!("│ │  ▚▚▚▚▚  │");
+    println!("│✾│  ▚▚▚▚▚  │");
+    println!("╰─│✾ ₪₪₪₪₪ ✾│");
+    println!("  ╰─────────╯");
+}
+
+
+
+// CURSOR STUFF
+fn move_cursor(pos: i32, dir: Direction){
+    print!("\x1b[{pos}{}", dir as u8 as char);
+}
+
+fn move_cursor_absolute(posX: i32, posY: i32){
+    print!("\x1b[{posY};{posX}f");
+}
+
+fn change_foreground(color: Color) {
+    print!("\x1b[{}m", color as i32);
+}
+
+fn change_background(color: Color) {
+    print!("\x1b[{}m", color as i32 + 10);
+}
+
+enum Direction {
+    Up = 65,
+    Down,
+    Right,
+    Left
+}
+
+enum Color {
+    Default = 39,
+    Black = 30,
+    Red,
+    Green,
+    Yellow,
+    Blue,
+    Magenta,
+    Cyan,
+    White,
+    Gray = 90,
+    BrightRed,
+    BrightGreen,
+    BrightYellow,
+    BrightBlue,
+    BrightMagenta,
+    BrightCyan,
+    BrightWhite
+
 }
