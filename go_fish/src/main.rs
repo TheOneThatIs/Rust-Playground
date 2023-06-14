@@ -238,7 +238,7 @@ fn play_turn(deck: &Vec<Card>) {
 }
 
 fn render() {
-	println!("\e[8;25;80t");
+	//println!("\e[8;25;80t");
 	print!("{esc}c", esc = 27 as char); // Clear screen
 	let terminal_size = console::Term::size(&console::Term::stdout());
 	
@@ -250,7 +250,7 @@ fn render() {
 	println!(r"  ╲╱_____╱   ╲╱_____╱      ╲╱_╱     ╲╱_╱   ╲╱_____╱   ╲╱_╱╲╱_╱");
 	println!("{char:*>width$}", char = "*", width=terminal_size.1 as usize);
 
-	move_cursor(1, Direction::Down);
+	//move_cursor(1, Direction::Down);
 
 	println!("╭───╭───╭─────────╮");
     println!("│✾ ₪│✾ ₪│✾ ₪₪₪₪₪ ✾│");
@@ -263,7 +263,18 @@ fn render() {
     println!("╰───╰───╰─────────╯");
 	
 
-    move_cursor(3, Direction::Down);
+	println!("╓╓╓─────────╮");
+	println!("║║║✾ ₪₪₪₪₪ ✾│");
+	println!("║║║  ▚▚▚▚▚  │");
+	println!("║║║  ▚▚▚▚▚  │");
+	println!("║║║  ▚▚▚▚▚  │");
+	println!("║║║  ▚▚▚▚▚  │");
+	println!("║║║  ▚▚▚▚▚  │");
+	println!("║║║✾ ₪₪₪₪₪ ✾│");
+	println!("╙╙╙─────────╯");
+
+
+    //move_cursor(3, Direction::Down);
 	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("╭──────────╮");
 	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
@@ -285,7 +296,7 @@ fn render() {
 	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
     println!("  ╰─────────╯");
 
-	move_cursor(3, Direction::Down);
+	//move_cursor(3, Direction::Down);
 	println!("{char: >width$}", char = " 1:  2:  3:        ", width=terminal_size.1 as usize);
 	println!("{char: >width$}", char = "╭───╭───╭─────────╮", width=terminal_size.1 as usize);
 	println!("{char: >width$}", char = "│ A │ 10│ 3       │", width=terminal_size.1 as usize);
