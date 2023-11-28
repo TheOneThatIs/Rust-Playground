@@ -1,4 +1,6 @@
-#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+use strum_macros::EnumIter;
+
+#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, EnumIter)]
 pub enum Suit {
     Club,
     Diamond,
@@ -6,7 +8,7 @@ pub enum Suit {
     Heart,
 }
 
-#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, EnumIter)]
 pub enum Rank {
     Ace,
     Two,
