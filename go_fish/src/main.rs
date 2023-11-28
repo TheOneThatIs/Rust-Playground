@@ -10,6 +10,10 @@ enum Location {
 	PlayerHand=0, OpponentHand=1, Deck=2, PairPile=3
 }
 
+enum State {
+	FaceUp = 0, FaceUpLSide = 1, FaceUpRSide = 2, FaceDown = 3, FaceDownLSide = 4, FaceDownRSide = 5
+}
+
 struct Card {
 	rank: u8,
 	suit: u8
@@ -26,7 +30,7 @@ fn main() {
     //println!("│       3 │");
     //println!("╰─────────╯");
     //
-
+	//
     //println!("╭─────────╮");//⌢⌄ 
     //println!("│ A♧      │");
     //println!("│    █    │");
@@ -35,6 +39,35 @@ fn main() {
     //println!("│ ███████ │");
     //println!("│ ██   ██ │");
     //println!("│      A♧ │");
+    //println!("╰─────────╯");
+	//println!("╭─────────╮");
+    //println!("│      J♧ │");
+    //println!("│      ██ │");
+    //println!("│      ██ │");
+    //println!("│      ██ │");
+    //println!("│ ██   ██ │");
+    //println!("│  █████  │");
+    //println!("│ J♧      │");
+    //println!("╰─────────╯");
+	//
+	//println!("╭─────────╮");
+    //println!("│      Q♧ │");
+    //println!("│    🕆    │");
+    //println!("│ │╲╱ ╲╱│ │");
+    //println!("│ │⁕ ※ ⁕│ │");
+    //println!("│ ╰⏔⏔⏔⏔⏔╯ │");
+    //println!("│         │");
+    //println!("│ Q♧      │");
+    //println!("╰─────────╯");
+    //
+    //println!("╭─────────╮");
+    //println!("│      K♧ │");
+    //println!("│  _.🕆._  │");
+    //println!("│(^╲╱^╲╱^)│");
+    //println!("│ ╲⁕*⁛*⁕╱ │");
+    //println!("│ ╰⏔⏔°⏔⏔╯ │");
+    //println!("│         │");
+    //println!("│ K♧      │");
     //println!("╰─────────╯");
     //
     //println!("╭─────────╮");
@@ -126,7 +159,7 @@ fn main() {
     //println!("│    ♠    │");
     //println!("│      10 │");
     //println!("╰─────────╯");
-
+	//
     //println!("╭─────────╮");
     //println!("│ ♧       │");
     //println!("│  _  __  │");
@@ -139,10 +172,10 @@ fn main() {
     //println!("╭─────────╮");
     //println!("│ ♧ ___   │");
     //println!("│  ╱ _ ╲  │");
-   //println!(r"│ │ | | │ │");
+    //println!(r"│ │ | | │ │");
     //println!("│ │ |_| │ │");
     //println!("│  ╲__╲_╲ │");
-   //println!(r"│         │");
+    //println!(r"│         │");
     //println!("│       ♧ │");
     //println!("╰─────────╯");
     //println!("╭─────────╮");
@@ -173,61 +206,146 @@ fn main() {
     //println!("│ ██   ██ │");
     //println!("│ K♧      │");
     //println!("╰─────────╯");
+	
 
 	let mut hand: Vec<i32>;
 	let mut opponents_hand: Vec<i32>;
-	let mut deck: Vec<Card> = Vec::with_capacity(53);
+	let mut deck: Vec<Card> = Vec::with_capacity(52);
 
 	for i in 0..4 {
 		for j in 1..14 {
 			deck.push(Card {rank: j as u8, suit: i as u8});
 		}
 	}
-    
+
+	println!("{}", card_builder(Rank::King, Suit::Club, State::FaceUp));
+
     loop {
-        render();
+        //render();
         play_turn(&deck);
     }
-
-    //println!("╭─────────╮");
-    //println!("│      J♧ │");
-    //println!("│      ██ │");
-    //println!("│      ██ │");
-    //println!("│      ██ │");
-    //println!("│ ██   ██ │");
-    //println!("│  █████  │");
-    //println!("│ J♧      │");
-    //println!("╰─────────╯");
-	//
-	//println!("╭─────────╮");
-    //println!("│      Q♧ │");
-    //println!("│    🕆    │");
-    //println!("│ │╲╱ ╲╱│ │");
-    //println!("│ │⁕ ※ ⁕│ │");
-    //println!("│ ╰⏔⏔⏔⏔⏔╯ │");
-    //println!("│         │");
-    //println!("│ Q♧      │");
-    //println!("╰─────────╯");
-    //
-    //println!("╭─────────╮");
-    //println!("│      K♧ │");
-    //println!("│  _.🕆._  │");
-    //println!("│(^╲╱^╲╱^)│");
-    //println!("│ ╲⁕*⁛*⁕╱ │");
-    //println!("│ ╰⏔⏔°⏔⏔╯ │");
-    //println!("│         │");
-    //println!("│ K♧      │");
-    //println!("╰─────────╯");
 }
 
-fn create_card(rank: i32, suit: i32) -> String {
-	let base_card = String::from("╭─────────╮\n│      RS │\n│         │\n│         │\n│         │\n│         │\n│         │\n│ RS      │\n╰─────────╯");
-	let edge_card = String::from("╭───\n│   \n│   \n│   \n│   \n│   \n│   \n│   \n╰───");
-	let suit_pattern_2 = String::from(" n       \n         \n      s  \n         \n  s      \n         \n       n ");
+fn card_builder(rank: Rank, suit: Suit, state: State) -> String {
+	let base_card2 = String::from("╭─────────╮\n│       2 │\n│         │\n│      *  │\n│         │\n│  *      │\n│         │\n│ 2       │\n╰─────────╯");
+	let base_card3 = String::from("╭─────────╮\n│       3 │\n│         │\n│      *  │\n│    *    │\n│  *      │\n│         │\n│ 3       │\n╰─────────╯");
+	let base_card4 = String::from("╭─────────╮\n│       4 │\n│         │\n│  *   *  │\n│         │\n│  *   *  │\n│         │\n│ 4       │\n╰─────────╯");
+	let base_card5 = String::from("╭─────────╮\n│       5 │\n│         │\n│  *   *  │\n│    *    │\n│  *   *  │\n│         │\n│ 5       │\n╰─────────╯");
+	let base_card6 = String::from("╭─────────╮\n│       6 │\n│         │\n│  *   *  │\n│  *   *  │\n│  *   *  │\n│         │\n│ 6       │\n╰─────────╯");
+	let base_card7 = String::from("╭─────────╮\n│       7 │\n│         │\n│  *   *  │\n│ *  *  * │\n│  *   *  │\n│         │\n│ 7       │\n╰─────────╯");
+	let base_card8 = String::from("╭─────────╮\n│       8 │\n│    *    │\n│  *   *  │\n│   * *   │\n│  *   *  │\n│    *    │\n│ 8       │\n╰─────────╯");
+	let base_card9 = String::from("╭─────────╮\n│       9 │\n│    *    │\n│  *   *  │\n│  * * *  │\n│  *   *  │\n│    *    │\n│ 9       │\n╰─────────╯");
+	let base_card10 = String::from("╭─────────╮\n│      10 │\n│    *    │\n│  *   *  │\n│ * * * * │\n│  *   *  │\n│    *    │\n│ 10      │\n╰─────────╯");
+	let base_card_jack = String::from("╭─────────╮\n│      10 │\n│    *    │\n│  *   *  │\n│ * * * * │\n│  *   *  │\n│    *    │\n│ 10      │\n╰─────────╯");
+	let base_card_queen = String::from("╭─────────╮\n│       Q │\n│    🕆    │\n│ │╲╱ ╲╱│ │\n│ │⁕ ※ ⁕│ │\n│ ╰⏔⏔⏔⏔⏔╯ │\n│         │\n│ Q       │\n╰─────────╯");
+	let base_card_king = String::from("╭─────────╮\n│       K │\n│  _.🕆._  │\n│(^╲╱^╲╱^)│\n│ ╲⁕*⁛*⁕╱ │\n│ ╰⏔⏔°⏔⏔╯ │\n│         │\n│ K       │\n╰─────────╯");
 
-	println!("{}", base_card);
-
-	String::new()
+	match rank {
+		Rank::Ace => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Two => match state {
+			State::FaceUp => return base_card2,
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Three => match state {
+			State::FaceUp => return base_card3,
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Four => match state {
+			State::FaceUp => return base_card4,
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Five => match state {
+			State::FaceUp => return base_card5,
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Six => match state {
+			State::FaceUp => return base_card6,
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Seven => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Eight => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Nine => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Ten => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Jack => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::Queen => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+		Rank::King => match state {
+			State::FaceUp => return String::from(""),
+			State::FaceDown => return String::from(""),
+			State::FaceDownLSide => return String::from(""),
+			State::FaceDownRSide => return String::from(""),
+			State::FaceUpLSide => return String::from(""),
+			State::FaceUpRSide => return String::from(""),
+		}
+	}
 }
 
 fn play_turn(deck: &Vec<Card>) {
@@ -262,39 +380,25 @@ fn render() {
     println!("│✾ ₪│✾ ₪│✾ ₪₪₪₪₪ ✾│");
     println!("╰───╰───╰─────────╯");
 	
-
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("╓╓╓─────────╮");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║✾ ₪₪₪₪₪ ✾│");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║  ▚▚▚▚▚  │");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("║║║✾ ₪₪₪₪₪ ✾│");
+	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
 	println!("╙╙╙─────────╯");
 
-
-    //move_cursor(3, Direction::Down);
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-	println!("╭──────────╮");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│✾╭────────┴╮");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│ │✾ ₪₪₪₪₪ ✾│");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│ │  ▚▚▚▚▚  │");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│ │  ▚▚▚▚▚  │");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│ │  ▚▚▚▚▚  │");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│ │  ▚▚▚▚▚  │");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("│✾│  ▚▚▚▚▚  │");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("╰─│✾ ₪₪₪₪₪ ✾│");
-	move_cursor((terminal_size.1 as i32/2)-7, Direction::Right);
-    println!("  ╰─────────╯");
 
 	//move_cursor(3, Direction::Down);
 	println!("{char: >width$}", char = " 1:  2:  3:        ", width=terminal_size.1 as usize);
