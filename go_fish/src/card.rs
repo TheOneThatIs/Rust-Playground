@@ -1,7 +1,8 @@
 use strum_macros::EnumIter;
+use std::collections::HashMap;
 
 pub enum Type {
-    Middle
+    Middle,
     LeftEdge,
     RightEdge,
 }
@@ -11,7 +12,7 @@ pub enum Facing {
     FaceDown,
 }
 
-#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, EnumIter)]
+#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, EnumIter)]
 pub enum Suit {
     Club,
     Diamond,
@@ -19,7 +20,7 @@ pub enum Suit {
     Heart,
 }
 
-#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, EnumIter)]
+#[derive (Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, EnumIter)]
 pub enum Rank {
     Ace,
     Two,
@@ -48,15 +49,15 @@ impl Card {
     }
 }
 
-pub fn create_card(suit: Suit, rank: Rank, type: Type, facing: Facing) {
-    suit_map = [
+pub fn create_card(suit: Suit, rank: Rank, card_type: Type, facing: Facing) {
+    let suit_map: HashMap<Suit, char> = [
         (Suit::Club, '♣'),
         (Suit::Diamond, '♦'),
         (Suit::Spade, '♠'),
         (Suit::Heart, '♥'),
-    ].iter().cloned.collect::<HashMap<Suit, char>>();
+    ].iter().cloned().collect();
 
-    let rank_map = [
+    let rank_map: HashMap<Rank, &str> = [
         (Rank::Ace, "A"),
         (Rank::Two, "2"),
         (Rank::Three, "3"),
@@ -70,5 +71,5 @@ pub fn create_card(suit: Suit, rank: Rank, type: Type, facing: Facing) {
         (Rank::Jack, "J"),
         (Rank::Queen, "Q"),
         (Rank::King, "K"),
-    ].iter().cloned.collect::<HashMap<Rank, &str>>();
+    ].iter().cloned().collect();
 }
