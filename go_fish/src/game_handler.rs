@@ -5,16 +5,21 @@ use rand::seq::SliceRandom;
 
 pub fn play() {
 	let mut player_has_won: bool = false;
-	let deck = create_deck(true);
+	let mut deck = create_deck(true);
+	let mut player_1_hand: Vec<Card> = Vec::new();
+	let mut player_2_hand: Vec<Card> = Vec::new();
 	
-	for i in 0..52 {
-		println!("{:?}", deck[i]);
+	for i in 0..7 {
+		player_1_hand.push(draw(&mut deck));
+		player_2_hand.push(draw(&mut deck));
 	}
 	
-	while !player_has_won {
-		player_1_turn();
-		player_2_turn();
-	}
+	Card::render(&deck[0]);
+	
+	// while !player_has_won {
+	// 	player_1_turn();
+	// 	player_2_turn();
+	// }
 }
 
 fn player_1_turn() {
@@ -47,4 +52,9 @@ fn create_deck(is_shuffled: bool) -> Vec<Card> {
 fn shuffle(card_set: &mut Vec<Card>){
 	let mut generator = thread_rng();
 	card_set.shuffle(&mut generator);
+}
+
+fn draw(deck: &mut Vec<Card>) -> Card {
+	let card = deck.pop().unwrap();
+	card
 }

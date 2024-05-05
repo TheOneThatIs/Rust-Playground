@@ -47,6 +47,17 @@ impl Card {
     pub fn new(suit: Suit, rank: Rank) -> Card {
         Card { suit, rank }
     }
+    pub fn render(card: &Card) {
+        println!("╭─────────╮");
+        println!("│ rs      │");
+        println!("│*********│");
+        println!("│*********│");
+        println!("│*********│");
+        println!("│*********│");
+        println!("│*********│");
+        println!("│      rs │");
+        println!("╰─────────╯");
+    }
 }
 
 pub fn create_card(suit: Suit, rank: Rank, card_type: Type, facing: Facing) {
