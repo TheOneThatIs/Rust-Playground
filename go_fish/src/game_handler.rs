@@ -1,9 +1,11 @@
 use crate::card::*;
 use strum::IntoEnumIterator;
+use rand::thread_rng;
+use rand::seq::SliceRandom;
 
 pub fn play() {
 	let mut player_has_won: bool = false;
-	let deck = create_deck();
+	let deck = create_deck(true);
 	
 	for i in 0..52 {
 		println!("{:?}", deck[i]);
@@ -23,7 +25,7 @@ fn player_2_turn() {
 	
 }
 
-fn create_deck() -> Vec<Card> {
+fn create_deck(is_shuffled: bool) -> Vec<Card> {
 	let mut deck = Vec::<Card>::new();
 	deck.reserve(52);
 	
@@ -33,5 +35,16 @@ fn create_deck() -> Vec<Card> {
 			deck.push(card);
 		}
 	}
+	
+	if is_shuffled {
+		shuffle(&mut deck);
+	}
+	
+	create_card(Suit::Club, Rank::Ace, Type::Middle, Facing::FaceUp);
 	deck
+}
+
+fn shuffle(card_set: &mut Vec<Card>){
+	let mut generator = thread_rng();
+	card_set.shuffle(&mut generator);
 }
