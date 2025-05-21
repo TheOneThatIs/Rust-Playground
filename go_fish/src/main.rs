@@ -1,6 +1,6 @@
 mod game_handler;
 mod card;
 
-fn main() {
+fn main() { 
     game_handler::play();
 }

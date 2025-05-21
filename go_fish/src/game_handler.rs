@@ -9,12 +9,14 @@ pub fn play() {
 	let mut player_1_hand: Vec<Card> = Vec::new();
 	let mut player_2_hand: Vec<Card> = Vec::new();
 	
+	for &card in &deck{
+		card.render();
+	}
+	
 	for i in 0..7 {
 		player_1_hand.push(draw(&mut deck));
 		player_2_hand.push(draw(&mut deck));
 	}
-	
-	Card::render(&deck[0]);
 	
 	// while !player_has_won {
 	// 	player_1_turn();
@@ -31,8 +33,7 @@ fn player_2_turn() {
 }
 
 fn create_deck(is_shuffled: bool) -> Vec<Card> {
-	let mut deck = Vec::<Card>::new();
-	deck.reserve(52);
+	let mut deck = Vec::<Card>::with_capacity(52);
 	
 	for suit in Suit::iter() {
 		for rank in Rank::iter() {
