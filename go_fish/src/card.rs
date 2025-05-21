@@ -53,16 +53,6 @@ impl Card {
     }
     pub fn render(self) {
         println!("{}", create_card(self.suit, self.rank, Type::Middle, Facing::FaceUp));
-
-        //println!("╭─────────╮");
-        //println!("│ rs      │");
-        //println!("│*********│");
-        //println!("│*********│");
-        //println!("│*********│");
-        //println!("│*********│");
-        //println!("│*********│");
-        //println!("│      rs │");
-        //println!("╰─────────╯");
     }
 
 }

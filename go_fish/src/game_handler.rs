@@ -1,7 +1,7 @@
 use crate::card::*;
-use strum::IntoEnumIterator;
 use rand::thread_rng;
-use rand::seq::SliceRandom;
+use strum::IntoEnumIterator;
+use rand::prelude::SliceRandom;
 
 pub fn play() {
 	let mut player_has_won: bool = false;
