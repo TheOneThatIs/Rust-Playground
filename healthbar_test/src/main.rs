@@ -8,12 +8,12 @@ fn main() {
 
     while hp > 0 {
         clear_screen();
-        drawHealth(&hp, &maxHP);
+        draw_health(&hp, &maxHP);
         attack(&mut hp);
     }
 
     move_cursor_absolute(0, 1);
-    drawHealth(&hp, &maxHP);
+    draw_health(&hp, &maxHP);
     move_cursor_absolute(0, 5);
     println!("Goblin died!               ");
     println!("                ");
@@ -25,7 +25,7 @@ fn main() {
 }
 
 
-fn drawHealth(hp: &i32, maxHP: &i32){
+fn draw_health(hp: &i32, max_HP: &i32){
     println!("{}", console::style("Goblin").cyan().italic());
 
     print!("{}", console::style("HP: ").green());
@@ -40,11 +40,11 @@ fn drawHealth(hp: &i32, maxHP: &i32){
         }
     }
 
-    for num in 0..*maxHP-*hp {
+    for num in 0..max_HP-hp {
         print!("{}", console::style("░").white());
     }
 
-    println!(" {hp}/{maxHP}\n\n");
+    println!(" {hp}/{max_HP}\n\n");
 }
 
 fn attack(hp: &mut i32) {
@@ -54,10 +54,7 @@ fn attack(hp: &mut i32) {
 
     io::stdin().read_line(&mut atk).expect("Failed to read the line!");
 
-    let atk: i32 = match atk.trim().parse() {
-        Ok(num) => num,
-        Err(_) => 0
-    };
+    let atk: i32 = atk.trim().parse().unwrap_or_else(|_| 0);
 
     *hp = if (*hp - atk) >= 0 { *hp - atk} else {0};
 
